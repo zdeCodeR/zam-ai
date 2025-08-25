@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Tools dokseng orang berbasis web">
+        <meta property="og:image" content="https://i.pinimg.com/originals/cb/7f/d1/cb7fd1aaf24a5fa06289691568dd0873.jpg">
+        <title>Dokseng orang</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script type="text/javascript" src="src/nik-parser.js"></script>
+        <script>
+            function parseNIK() {
+                const nik = document.getElementById('nikInput').value;
+                nikParse(nik, function(result) {
+                    console.log(result); // object
+                    const resultText = JSON.stringify(result, null, 2);
+                    document.getElementById('result').innerText = resultText;
+                    document.getElementById('result').classList.add('fade-in');
+                });
+            }
+
+            function copyToClipboard() {
+                const resultText = document.getElementById('result').innerText;
+                navigator.clipboard.writeText(resultText).then(() => {
+                    alert("Data copied to clipboard!");
+                }).catch(err => {
+                    alert("Failed to copy data: " + err);
+                });
+            }
+        </script>
+        <style>
+            /* Animation for fading in result */
+            .fade-in {
+                animation: fadeIn 1s ease-in-out;
+            }
+
+            @keyframes fadeIn {
+                0% { opacity: 0; }
+                100% { opacity: 1; }
+            }
+
+            /* Hover effect for buttons */
+            .button-hover:hover {
+                transform: scale(1.05);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            }
+
+            /* Focus animation for input fields */
+            .input-focus:focus {
+                outline: none;
+                border-color: #34d399;
+                box-shadow: 0 0 5px rgba(52, 211, 153, 0.8);
+                transform: scale(1.02);
+            }
+        </style>
+    </head>
+    <body class="bg-gray-900 text-green-500 font-mono flex items-center justify-center min-h-screen">
+        <div class="bg-gray-800 w-full max-w-3xl rounded-lg shadow-lg border border-gray-700">
+            <div class="bg-gray-900 border-b border-gray-700 p-3 flex items-center justify-between rounded-t-lg">
+                <div class="flex items-center space-x-2">
+                    <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                    <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                    <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                </div>
+                <span class="text-sm text-gray-400">root@adjidev</span>
+            </div>
+
+            <div class="p-6">
+                <h1 class="text-2xl font-bold mb-4">Dokseng Orang</h1>
+                <p class="text-gray-400 mb-8"></p>
+
+                <div class="bg-gray-900 p-4 rounded-md mb-6">
+                    <label for="nikInput" class="block text-lg font-semibold mb-2">Enter NIK:</label>
+                    <input type="text" id="nikInput" placeholder="Enter NIK number" class="w-full p-3 bg-gray-800 text-green-500 border border-gray-700 rounded-md shadow-sm input-focus mb-4"/>
+                    <button onclick="parseNIK()" class="w-full py-3 bg-green-500 text-black font-semibold rounded-md shadow-md button-hover transition duration-200">Parse NIK</button>
+                </div>
+
+                <div class="bg-gray-900 p-4 rounded-md">
+                    <strong class="text-lg">Parsed NIK Data:</strong>
+                    <pre id="result" class="bg-gray-800 text-green-500 p-4 mt-4 rounded-md overflow-x-auto"></pre>
+                    <button onclick="copyToClipboard()" class="mt-4 w-full py-3 bg-green-500 text-black font-semibold rounded-md shadow-md button-hover transition duration-200">Copy Result</button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
