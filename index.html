@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>zam-Ai</title>
+    <title>ZAM-AI Chat Assistant</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github-dark.min.css">
     <style>
         :root {
-            --primary-bg: #121218;
-            --secondary-bg: #1e1e2a;
-            --text-color: #e0e0e0;
-            --ai-bubble: #2a2a3a;
-            --user-bubble: #3a3a4a;
-            --pink-accent: #ff6b9e;
-            --light-blue: #6bb9ff;
-            --mint-green: #7fffd4;
-            --input-bg: #252535;
+            --primary-bg: #1a1a2e;
+            --secondary-bg: #16213e;
+            --text-color: #e6e6e6;
+            --ai-bubble: #0f3460;
+            --user-bubble: #4e4e8d;
+            --accent-1: #533483;
+            --accent-2: #e94560;
+            --input-bg: #1f4068;
             --code-bg: #1a1a2a;
             --code-border: rgba(255, 255, 255, 0.1);
         }
@@ -28,133 +28,166 @@
         }
 
         body {
-            background-color: var(--primary-bg);
+            background: linear-gradient(135deg, var(--primary-bg) 0%, var(--secondary-bg) 100%);
             color: var(--text-color);
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
 
         .header {
-            background-color: var(--secondary-bg);
-            padding: 1rem;
+            background-color: var(--accent-1);
+            padding: 1.2rem;
             text-align: center;
-            border-bottom: 2px solid var(--pink-accent);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            border-bottom: 3px solid var(--accent-2);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
         }
 
         .header h1 {
-            font-size: 1.5rem;
-            background: linear-gradient(90deg, var(--pink-accent), var(--light-blue), var(--mint-green));
+            font-size: 1.8rem;
+            background: linear-gradient(90deg, #ff6b9e, #6bb9ff, #7fffd4);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .header p {
+            font-size: 1rem;
+            margin-top: 0.3rem;
+            opacity: 0.8;
         }
 
         .chat-container {
             flex: 1;
             overflow-y: auto;
-            padding: 1rem;
+            padding: 1.5rem;
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: 1.2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
         }
 
         .message {
             max-width: 80%;
-            padding: 0.8rem 1rem;
-            border-radius: 1rem;
-            line-height: 1.4;
+            padding: 1rem 1.2rem;
+            border-radius: 1.2rem;
+            line-height: 1.5;
             position: relative;
-            animation: fadeIn 0.3s ease;
+            animation: fadeIn 0.4s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .ai-message {
             align-self: flex-start;
-            background-color: var(--ai-bubble);
-            border-bottom-left-radius: 0.2rem;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: linear-gradient(135deg, var(--ai-bubble) 0%, #1a3a5f 100%);
+            border-bottom-left-radius: 0.3rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .user-message {
             align-self: flex-end;
-            background-color: var(--user-bubble);
-            border-bottom-right-radius: 0.2rem;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: linear-gradient(135deg, var(--user-bubble) 0%, #3d3d7a 100%);
+            border-bottom-right-radius: 0.3rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .message-time {
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             opacity: 0.7;
-            margin-top: 0.3rem;
+            margin-top: 0.5rem;
             text-align: right;
         }
 
         .ai-name {
-            color: var(--mint-green);
+            color: #7fffd4;
             font-weight: bold;
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .user-name {
-            color: var(--light-blue);
+            color: #6bb9ff;
             font-weight: bold;
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.4rem;
             text-align: right;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 0.5rem;
         }
 
         .input-area {
             display: flex;
-            padding: 1rem;
+            padding: 1.2rem;
             background-color: var(--secondary-bg);
-            border-top: 2px solid var(--light-blue);
-            gap: 0.5rem;
+            border-top: 2px solid var(--accent-1);
+            gap: 0.8rem;
+            position: sticky;
+            bottom: 0;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
         }
 
         .message-input {
             flex: 1;
-            padding: 0.8rem 1rem;
+            padding: 1rem 1.2rem;
             border-radius: 2rem;
             border: none;
             background-color: var(--input-bg);
             color: var(--text-color);
             outline: none;
             font-size: 1rem;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3);
         }
 
         .message-input:focus {
-            box-shadow: 0 0 0 2px var(--pink-accent);
+            box-shadow: 0 0 0 2px var(--accent-2), inset 0 2px 5px rgba(0, 0, 0, 0.3);
         }
 
         .send-button, .upload-button {
-            background-color: var(--pink-accent);
+            background: linear-gradient(135deg, var(--accent-2) 0%, #ff4b7d 100%);
             color: white;
             border: none;
             border-radius: 50%;
-            width: 3rem;
-            height: 3rem;
+            width: 3.2rem;
+            height: 3.2rem;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
 
         .upload-button {
-            background-color: var(--light-blue);
+            background: linear-gradient(135deg, var(--accent-1) 0%, #634a8c 100%);
         }
 
         .send-button:hover, .upload-button:hover {
-            transform: scale(1.05);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
         }
 
         .send-button:active, .upload-button:active {
-            transform: scale(0.95);
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .send-button.loading {
+            opacity: 0.8;
+            pointer-events: none;
         }
 
         #file-input {
@@ -163,18 +196,19 @@
 
         .typing-indicator {
             display: inline-flex;
-            gap: 0.3rem;
+            gap: 0.4rem;
             align-items: center;
-            padding: 0.5rem 1rem;
+            padding: 0.8rem 1.2rem;
             background-color: var(--ai-bubble);
-            border-radius: 1rem;
+            border-radius: 1.2rem;
             align-self: flex-start;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         }
 
         .typing-dot {
-            width: 0.5rem;
-            height: 0.5rem;
-            background-color: var(--mint-green);
+            width: 0.6rem;
+            height: 0.6rem;
+            background-color: #7fffd4;
             border-radius: 50%;
             animation: typingAnimation 1.4s infinite ease-in-out;
         }
@@ -209,7 +243,7 @@
         .markdown-content h5, 
         .markdown-content h6 {
             margin: 0.5rem 0;
-            color: var(--mint-green);
+            color: #7fffd4;
         }
 
         .markdown-content p {
@@ -227,21 +261,21 @@
         }
 
         .markdown-content strong {
-            color: var(--pink-accent);
+            color: #ff6b9e;
         }
 
         .markdown-content em {
-            color: var(--light-blue);
+            color: #6bb9ff;
             font-style: italic;
         }
 
         .markdown-content a {
-            color: var(--light-blue);
+            color: #6bb9ff;
             text-decoration: underline;
         }
 
         .markdown-content blockquote {
-            border-left: 3px solid var(--pink-accent);
+            border-left: 3px solid #ff6b9e;
             padding-left: 1rem;
             margin: 0.5rem 0;
             color: #aaa;
@@ -269,7 +303,7 @@
 
         .code-block-language {
             font-size: 0.8rem;
-            color: var(--mint-green);
+            color: #7fffd4;
             font-family: monospace;
         }
 
@@ -288,11 +322,11 @@
         }
 
         .code-block-copy:hover {
-            background-color: var(--pink-accent);
+            background-color: #ff6b9e;
         }
 
         .code-block-copy.copied {
-            background-color: var(--mint-green);
+            background-color: #7fffd4;
             color: #000;
         }
 
@@ -326,39 +360,67 @@
 
         .image-message {
             font-style: italic;
-            color: var(--light-blue);
+            color: #6bb9ff;
             margin: 0.3rem 0;
+        }
+
+        /* Error message */
+        .error-message {
+            color: #ff6b6b;
+            text-align: center;
+            padding: 0.5rem;
+            font-size: 0.9rem;
         }
 
         @media (max-width: 768px) {
             .message {
                 max-width: 90%;
             }
+            
+            .header h1 {
+                font-size: 1.2rem;
+            }
+            
+            .input-area {
+                padding: 0.8rem;
+            }
+            
+            .send-button, .upload-button {
+                width: 2.8rem;
+                height: 2.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .message {
+                max-width: 95%;
+                padding: 0.7rem;
+            }
+            
+            .chat-container {
+                padding: 0.8rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>ZAM AI</h1>
+        <h1>ZAM AI Assistant</h1>
+        <p>AI-powered assistant untuk membantu Anda</p>
     </div>
 
     <div class="chat-container" id="chat-container">
+        <!-- Messages will be added here dynamically -->
     </div>
 
     <div class="input-area">
         <button class="upload-button" id="upload-button" title="Upload Image">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-                <path d="M4.502 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
-                <path d="M14.002 13a2 2 0 0 1-2 2h-10a2 2 0 0 1-2-2V5A2 2 0 0 1 2 3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8a2 2 0 0 1-1.17 1.821l-.865-.433A1 1 0 0 0 12 13.998V5a1 1 0 0 0-1-1h-10a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h10a1 1 0 0 0 .832-.375l.415-.625z"/>
-                <path d="M8.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
-            </svg>
+            <i class="fas fa-image"></i>
         </button>
         <input type="file" id="file-input" accept="image/*">
-        <input type="text" class="message-input" id="message-input" placeholder="Type your message..." autocomplete="off">
+        <input type="text" class="message-input" id="message-input" placeholder="Ketik pesan Anda..." autocomplete="off">
         <button class="send-button" id="send-button">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-                <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/>
-            </svg>
+            <i class="fas fa-paper-plane"></i>
         </button>
     </div>
 
@@ -372,7 +434,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/bash.min.js"></script>
 
     <script>
-        const Aiprompt = "Kamu adalah zam ai, asisten AI yang sangat cerdas dan responsif. Tugasmu adalah memberikan jawaban yang informatif, relevan, dan mudah dipahami. Kamu harus selalu menjaga nada percakapan yang profesional dan sopan. Jika pengguna mengirimkan gambar, kamu harus mencoba menjelaskan isi gambar tersebut dengan cara yang jelas dan ringkas.";
+        const Aiprompt = "Kamu adalah ZAM AI, asisten AI yang sangat cerdas dan responsif. Tugasmu adalah memberikan jawaban yang informatif, relevan, dan mudah dipahami. Kamu harus selalu menjaga nada percakapan yang profesional dan sopan. Jika pengguna mengirimkan gambar, kamu harus mencoba menjelaskan isi gambar tersebut dengan cara yang jelas dan ringkas.";
+        
         document.addEventListener('DOMContentLoaded', function() {
             const chatContainer = document.getElementById('chat-container');
             const messageInput = document.getElementById('message-input');
@@ -388,10 +451,12 @@
                 }
             });
 
-            addMessage('ai', 'hai, ada yang bisa aku bantu?');
+            // Add welcome message
+            addMessage('ai', 'Halo! Saya ZAM AI Assistant. Ada yang bisa saya bantu?');
 
+            // Event listeners
             sendButton.addEventListener('click', sendMessage);
-
+            
             messageInput.addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
                     sendMessage();
@@ -413,6 +478,10 @@
                 if (message) {
                     addMessage('user', message);
                     messageInput.value = '';
+                    
+                    // Show loading state
+                    sendButton.classList.add('loading');
+                    sendButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
 
                     const typingIndicator = document.createElement('div');
                     typingIndicator.className = 'typing-indicator';
@@ -429,9 +498,10 @@
             }
 
             function uploadImage(file) {
-
-                addMessage('user', `[Mengupload gambar: ${file.name}]`);
+                // For GitHub Pages, we can only show the file name since we can't upload to a server
+                addMessage('user', `[Gambar: ${file.name}]`);
                 
+                // Show typing indicator
                 const typingIndicator = document.createElement('div');
                 typingIndicator.className = 'typing-indicator';
                 typingIndicator.innerHTML = `
@@ -442,8 +512,10 @@
                 chatContainer.appendChild(typingIndicator);
                 chatContainer.scrollTop = chatContainer.scrollHeight;
                 
-                callAI(`Saya mengupload gambar: ${file.name}`, null);
+                // Call AI with image info
+                callAI(`Saya mengupload gambar: ${file.name}`);
                 
+                // Reset file input
                 fileInput.value = '';
             }
 
@@ -461,24 +533,26 @@
                 if (sender === 'ai') {
                     messageDiv.className = 'message ai-message';
                     messageDiv.innerHTML = `
-                        <div class="ai-name">ZAM-AI</div>
+                        <div class="ai-name"><i class="fas fa-robot"></i> ZAM-AI</div>
                         <div class="markdown-content">${processedContent}</div>
                         <div class="message-time">${time}</div>
                     `;
                 } else {
                     messageDiv.className = 'message user-message';
                     messageDiv.innerHTML = `
-                        <div class="user-name">You</div>
+                        <div class="user-name"><i class="fas fa-user"></i> You</div>
                         <div>${processedContent}</div>
                         <div class="message-time">${time}</div>
                     `;
                 }
 
+                // Remove any existing typing indicators
                 const typingIndicators = document.querySelectorAll('.typing-indicator');
                 typingIndicators.forEach(indicator => indicator.remove());
 
                 chatContainer.appendChild(messageDiv);
 
+                // Process code blocks for AI messages
                 if (sender === 'ai') {
                     processCodeBlocks(messageDiv);
                 }
@@ -515,10 +589,7 @@
                     header.innerHTML = `
                         <span class="code-block-language">${language}</span>
                         <button class="code-block-copy">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                            </svg>
+                            <i class="fas fa-copy"></i>
                             Copy
                         </button>
                     `;
@@ -530,21 +601,10 @@
                     const copyButton = container.querySelector('.code-block-copy');
                     copyButton.addEventListener('click', function() {
                         navigator.clipboard.writeText(codeBlock.textContent).then(() => {
-                            copyButton.innerHTML = `
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <polyline points="20 6 9 17 4 12"></polyline>
-                                </svg>
-                                Copied!
-                            `;
+                            copyButton.innerHTML = '<i class="fas fa-check"></i> Copied!';
                             copyButton.classList.add('copied');
                             setTimeout(() => {
-                                copyButton.innerHTML = `
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <rect x="9" y="9" width="13" height height="13" rx="2" ry="2"></rect>
-                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                                    </svg>
-                                    Copy
-                                `;
+                                copyButton.innerHTML = '<i class="fas fa-copy"></i> Copy';
                                 copyButton.classList.remove('copied');
                             }, 2000);
                         }).catch(err => {
@@ -556,6 +616,7 @@
                     hljs.highlightElement(codeBlock);
                 });
 
+                // Process inline code
                 const inlineCodeElements = messageDiv.querySelectorAll('code:not(pre code)');
                 inlineCodeElements.forEach((codeElement) => {
                     const span = document.createElement('span');
@@ -566,29 +627,47 @@
             }
 
             function callAI(message, imageUrl = null) {
-                let apiUrl = `https://fastrestapis.fasturl.link/aillm/gpt-4o?ask=${encodeURIComponent(message)}&style=${encodeURIComponent(Aiprompt)}&sessionId=abcxyz123`;
+                let apiUrl = `https://fastrestapis.fasturl.link/aillm/gpt-4o?ask=${encodeURIComponent(message)}&style=${encodeURIComponent(Aiprompt)}&sessionId=zam-${Date.now()}`;
 
                 if (imageUrl) {
                     apiUrl += `&imageUrl=${encodeURIComponent(imageUrl)}`;
                 }
 
-                fetch(apiUrl)
+                // Add timeout to the fetch request
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 30000);
+
+                fetch(apiUrl, { signal: controller.signal })
                     .then(response => {
+                        clearTimeout(timeoutId);
                         if (!response.ok) {
                             throw new Error('Network response was not ok');
                         }
                         return response.json();
                     })
                     .then(data => {
+                        // Remove loading state
+                        sendButton.classList.remove('loading');
+                        sendButton.innerHTML = '<i class="fas fa-paper-plane"></i>';
+
                         if (data.status === 200) {
                             addMessage('ai', data.result);
                         } else {
-                            addMessage('ai', "Sorry, I couldn't process your request. Please try again.");
+                            addMessage('ai', "Maaf, saya tidak dapat memproses permintaan Anda. Silakan coba lagi.");
                         }
                     })
                     .catch(error => {
                         console.error('Error:', error);
-                        addMessage('ai', "Sorry, there was an error processing your request. Please try again.");
+                        
+                        // Remove loading state
+                        sendButton.classList.remove('loading');
+                        sendButton.innerHTML = '<i class="fas fa-paper-plane"></i>';
+                        
+                        if (error.name === 'AbortError') {
+                            addMessage('ai', "Maaf, permintaan Anda mengalami timeout. Silakan coba lagi.");
+                        } else {
+                            addMessage('ai', "Maaf, terjadi kesalahan jaringan. Silakan periksa koneksi internet Anda dan coba lagi.");
+                        }
                     });
             }
         });
