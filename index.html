@@ -429,11 +429,9 @@
             }
 
             function uploadImage(file) {
-                // Untuk sekarang, kita hanya akan menampilkan nama file
-                // Di implementasi nyata, Anda perlu upload ke server terlebih dahulu
+
                 addMessage('user', `[Mengupload gambar: ${file.name}]`);
                 
-                // Tampilkan indikator typing
                 const typingIndicator = document.createElement('div');
                 typingIndicator.className = 'typing-indicator';
                 typingIndicator.innerHTML = `
@@ -444,12 +442,8 @@
                 chatContainer.appendChild(typingIndicator);
                 chatContainer.scrollTop = chatContainer.scrollHeight;
                 
-                // Panggil AI dengan informasi gambar
-                // Catatan: Di implementasi nyata, Anda perlu upload gambar ke server
-                // dan dapatkan URL gambar terlebih dahulu
                 callAI(`Saya mengupload gambar: ${file.name}`, null);
                 
-                // Reset file input
                 fileInput.value = '';
             }
 
